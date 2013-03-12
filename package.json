@@ -1,0 +1,9 @@
+{
+    "name": "platanus-jobs",
+    "description": "Platanus Jobs",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "3.x"
+    }
+}
