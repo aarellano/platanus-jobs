@@ -37,6 +37,18 @@ exports.findAll = function(req, res) {
     });
 };
 
+exports.showExplanation = function(req, res) {
+    res.send('<code>It seems that you didn\'t GET it. You need to send us a <strong>POST</strong> request with the parameters "name" and "email", and with an extra\
+        parameter "other", showing all the info that you want to share with us. </br></br>\
+        Example: </br></br>\
+        {"name": "Andres", "email": "andres@platan.us", "other": { </br>\
+            "city": "Washington DC", </br>\
+            "resume": "andres.io/resume.pdf", </br>\
+            "github": "github.com/aarellano", </br>\
+            "twitter": "@aarellanor"}} </code>');
+};
+
+
 exports.addSubmission = function(req, res) {
     var submission = req.body;
     console.log('Adding submission: ' + JSON.stringify(submission));
@@ -47,7 +59,8 @@ exports.addSubmission = function(req, res) {
                     res.send({'error':'An error has occurred'});
                 } else {
                     console.log('Success: ' + JSON.stringify(result[0]));
-                    res.send('Gracias ' + submission.name + '! Recibimos tu POST. Vamos a revisar lo que nos enviaste y te contactaremos');
+                    res.send('Hey ' + submission.name + '! Thanks for your POST, we got it. We\'ll be in touch shortly ;)');
+                    res.send(result[0]);
                 }
             });
         });

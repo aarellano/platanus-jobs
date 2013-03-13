@@ -10,6 +10,7 @@ app.configure(function () {
 
 app.post('/submissions', submission.addSubmission);
 // app.get('/submissions', submission.findAll);
+app.get('/submissions', submission.showExplanation);
 // app.get('/submissions/:id', submission.findById);
 // app.put('/submissions/:id', submission.updateSubmission);
 // app.delete('/submissions/:id', submission.deleteSubmission);
