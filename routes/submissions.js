@@ -40,16 +40,18 @@ exports.findAll = function(req, res) {
 exports.addSubmission = function(req, res) {
     var submission = req.body;
     console.log('Adding submission: ' + JSON.stringify(submission));
-    db.collection('submissions', function(err, collection) {
-        collection.insert(submission, {safe:true}, function(err, result) {
-            if (err) {
-                res.send({'error':'An error has occurred'});
-            } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
-                res.send(result[0]);
-            }
+    if (verifyParameters(submission, res)) {
+        db.collection('submissions', function(err, collection) {
+            collection.insert(submission, {safe:true}, function(err, result) {
+                if (err) {
+                    res.send({'error':'An error has occurred'});
+                } else {
+                    console.log('Success: ' + JSON.stringify(result[0]));
+                    res.send('Gracias ' + submission.name + '! Recibimos tu POST. Vamos a revisar lo que nos enviaste y te contactaremos');
+                }
+            });
         });
-    });
+    }
 }
 
 exports.updateSubmission = function(req, res) {
@@ -83,4 +85,15 @@ exports.deleteSubmission = function(req, res) {
             }
         });
     });
+}
+
+verifyParameters = function(submission, res) {
+    if (submission.name == undefined) {
+        console.log('Missing name parameter');
+        res.send('Hey, we need your name! Please post your application again');
+    } else if (submission.email == undefined) {
+        console.log('Missing email parameter');
+        res.send('Hey, we need your email! Please post your application again');
+    } else
+        return true
 }
